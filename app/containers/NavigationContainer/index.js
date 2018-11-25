@@ -28,6 +28,7 @@ export class NavigationContainer extends React.Component { // eslint-disable-lin
 
 const mapStateToProps = selectNavigationContainer();
 
+
 function mapDispatchToProps(dispatch) {
   return {
     requestTopics: () => dispatch(requestTopics()),

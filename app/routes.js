@@ -38,6 +38,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/user',
+      name: 'userWeightContainer',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/UserWeightContainer/reducer'),
+          System.import('containers/UserWeightContainer/sagas'),
+          System.import('containers/UserWeightContainer'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('userWeightContainer', reducer.default);
+          injectSagas('userWeightContainer', sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

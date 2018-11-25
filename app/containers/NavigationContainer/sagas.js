@@ -9,14 +9,19 @@ export function fetchTopicsFromServer() {
     .then(response => response.json());
 }
 
+// Voordeel van generator functies is het kunnen uitvoeren van async logica zonder callbacks!
+
 function* fetchTopics() {
   try {
-    const topics = yield call(fetchTopicsFromServer);
-    yield put(requestTopicsSucceeded(topics));
+    const topics = yield call(fetchTopicsFromServer); // call side effect - roept deze methode aan met deze parameters...
+    yield put(requestTopicsSucceeded(topics)); // put side effect - maakt het mogelijk acties uit te voeren zodat de data via redux wordt opgeslagen.
   } catch (e) {
     yield put(requestTopicsFailed(e.message));
   }
 }
+
+// Deze functie wordt afgevuurd nadat de fetchTopics actie wordt aangeroepen en voert de generator functie (fetchTopics aan).
+// Voordeel kunnen uitvoeren van async functies met side effects!!!
 
 // Individual exports for testing
 export function* fetchTopicsSaga() {
